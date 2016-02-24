@@ -1,0 +1,19 @@
+#!/bin/sh
+
+cd /src
+
+cat << EOF > /data/config.js
+{
+  graphitePort: $GRAPHITE_PORT
+, graphiteHost: "$GRAPHITE_HOST"
+, port: 8125
+, backends: [ "./backends/graphite" ]
+}
+EOF
+
+echo "Config is:"
+echo "=========="
+cat /data/config.js
+echo "=========="
+
+exec node stats.js /data/config.js
